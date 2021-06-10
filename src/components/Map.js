@@ -1,4 +1,3 @@
-
 import React, {useRef, useCallback, useMemo, memo} from 'react'
 import { 
     GoogleMap, 
@@ -48,9 +47,23 @@ const Map = ({ userCoords, setPlaces, places, handleMarkerClick, setMap, selecte
         libraries
         })
 
+        const renderUserMarker = () => {
+            console.log("RenderUserMarker:", userCoords)
+            return <Marker
+                position={userCoords}
+                icon={{
+                    url: '/YouAreHere.svg',
+                    scaledSize: new window.google.maps.Size(50,50),
+                    origin: new window.google.maps.Point(0,0),
+                    anchor: new window.google.maps.Point(25,25)
+                }}
+            />
+        }
+
         const renderMarkers = () => {
-            console.log("RenderMarkers:", places)
             return places.map((placeObj) => {
+
+            console.log("RenderMarkers:", placeObj.geometry.location)
               return <Marker 
                 key={placeObj.place_id}
                 position={placeObj.geometry.location} 
@@ -92,6 +105,15 @@ const Map = ({ userCoords, setPlaces, places, handleMarkerClick, setMap, selecte
             onLoad={onMapLoad}
             options={options}
         > 
+        <Marker
+            position={userCoords}
+            icon={{
+                url: '/YouAreHere.svg',
+                scaledSize: new window.google.maps.Size(50,50),
+                origin: new window.google.maps.Point(0,0),
+                anchor: new window.google.maps.Point(25,25)
+            }}
+        />
         {places ? renderMarkers() : null} 
         {selectedMarker ? renderInfoWindow() : null}
         </GoogleMap>
