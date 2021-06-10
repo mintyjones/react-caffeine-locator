@@ -11,6 +11,17 @@ const reducer = (state, action) => {
                 ...state,
                 places: action.data
             }
+        case("setMap") :
+            return {
+                ...state,
+                map: action.data
+            }
+        case("setPlaceDetails") :
+            return {
+                ...state,
+                placeDetails: action.data,
+                placeSelected: true
+            }
         default : return state
     }
 }
