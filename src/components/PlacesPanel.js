@@ -15,7 +15,7 @@ const PlacesPanel = ({ places, getPlaceDetails }) => {
     }
 
     return (
-        <div className="overflow-scroll h-screen">
+        <div className="w-3/12 overflow-scroll h-screen">
             { places.length > 1 ? renderPlaces(places) : <h1>Loading...</h1>}
         </div>
     )

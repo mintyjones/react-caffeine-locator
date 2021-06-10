@@ -87,7 +87,7 @@ const Map = ({ userCoords, setPlaces, places, handleMarkerClick, setMap, selecte
         <Locate panTo={panTo}/>
         <GoogleMap 
             mapContainerStyle={containerStyle}
-            zoom={14}
+            zoom={15.5}
             center={userCoords}
             onLoad={onMapLoad}
             options={options}

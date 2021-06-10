@@ -78,7 +78,14 @@ export default function App() {
         : 
           null 
         }
-        { placeSelected ? <DetailsPanel placeDetails={placeDetails}></DetailsPanel> : null }
+        { placeSelected ? 
+          <DetailsPanel 
+            placeDetails={placeDetails} 
+            removeSelectedPlace={removeSelectedPlace} 
+          /> 
+        : 
+          null 
+        }
       </div>
       
       <PlacesPanel places={places} getPlaceDetails={getPlaceDetails}></PlacesPanel>
