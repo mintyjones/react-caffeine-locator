@@ -19,9 +19,10 @@ export default function App() {
   }, [])
   
   return (
-    <div>
-      <h1>hello</h1>
+    <div className='flex'>
+      <div className='w-9/12 h-screen'>
       { userLocated ? <Map userCoords={userCoords}></Map> : null }
+      </div>
     </div>
   )
 }
