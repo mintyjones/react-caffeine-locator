@@ -3,11 +3,12 @@ import React from 'react'
 const Locate = ({panTo}) => {
     return (
         <div>
-            <button onClick={() => {
+            <button className='locate' onClick={() => {
                 navigator.geolocation.getCurrentPosition((position) => {
+                    console.log(position)
                     panTo({
                         lat: position.coords.latitude,
-                        lng: position.coords.latitude
+                        lng: position.coords.longitude
                     }, () => null, {enableHighAccuracy: true})
                 })
             }}

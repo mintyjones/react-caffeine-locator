@@ -22,6 +22,11 @@ const reducer = (state, action) => {
                 placeDetails: action.data,
                 placeSelected: true
             }
+        case("setMarker") : 
+            return {
+                ...state,
+                selectedMarker: action.data
+            }
         default : return state
     }
 }

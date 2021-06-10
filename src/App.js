@@ -11,7 +11,8 @@ export default function App() {
     places: [],
     placeSelected: false,
     placeDetails: {},
-    map: null
+    map: null,
+    selectedMarker: null
   }
 
   const [store, dispatch] = useReducer(reducer, initialState)
@@ -27,6 +28,21 @@ export default function App() {
   
   const setPlaces = (placesArr) => {
     dispatch({ type: "setPlaces", data: placesArr})
+  }
+  function handleMarkerClick(place, map) {
+    map.current.setZoom(16)
+    map.current.panTo(place.geometry.location)
+    if (place) {
+      dispatch({
+        type: "setMarker",
+        data: place
+      }) 
+    } else {
+      dispatch({
+        type: "setMarker",
+        data: null
+      }) 
+    }
   }
   const setPlaceDetails = (placeDetails) => {
     dispatch({ type: "setPlaceDetails", data: placeDetails })
@@ -46,7 +62,7 @@ export default function App() {
   return (
     <div className="flex">
       <div className="w-9/12 h-screen z-0 relative">
-        { userLocated ? <Map userCoords={userCoords} setPlaces={setPlaces} setMap={setMap}></Map> : null }
+        { userLocated ? <Map userCoords={userCoords} setPlaces={setPlaces} setMap={setMap} handleMarkerClick={handleMarkerClick}></Map> : null }
         { placeSelected ? <DetailsPanel placeDetails={placeDetails}></DetailsPanel> : null }
       </div>
       
