@@ -8,21 +8,21 @@ const containerStyle = {
   height: '400px'
 };
 
-const mapRef = useRef()
-const onMapLoad = useCallback(
-    (map) => {
-        mapRef.current = map
-    },
-)
+    const Map = ({ userCoords }) => {
+        console.log(process.env.REACT_APP_GOOGLE_API_KEY)
 
-const panTo = useCallback(({lat,lng}) => {
-    mapRef.current.panTo({lat,lng})
-    mapRef.current.setZoom(14)
-})
+        const mapRef = useRef()
+        const onMapLoad = useCallback(
+            (map) => {
+                mapRef.current = map
+            },
+        )
 
-
-const Map = ({ userCoords }) => {
-    console.log(process.env.REACT_APP_GOOGLE_API_KEY)
+        const panTo = useCallback(({lat,lng}) => {
+            mapRef.current.panTo({lat,lng})
+            mapRef.current.setZoom(14)
+        })
+        
   return (
     <LoadScript
       googleMapsApiKey={"AIzaSyAPFl51bdExluvRDHFggZ_TTDv9xfUpUwc"}
