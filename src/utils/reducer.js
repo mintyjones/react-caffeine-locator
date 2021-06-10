@@ -6,6 +6,11 @@ const reducer = (state, action) => {
                 userCoords: action.data,
                 userLocated: true
             }
+        case("setPlaces") : 
+            return {
+                ...state,
+                places: action.data
+            }
         default : return state
     }
 }

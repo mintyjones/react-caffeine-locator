@@ -1,29 +1,43 @@
-import React from 'react'
-import { GoogleMap, LoadScript } from '@react-google-maps/api';
+import React, { useCallback, useMemo } from 'react'
+import { GoogleMap, useLoadScript } from '@react-google-maps/api';
 
 
 const containerStyle = {
-  width: '400px',
-  height: '400px'
+  width: '800px',
+  height: '800px'
 };
 
+const libraries = ['places']
 
-const Map = ({ userCoords }) => {
-    console.log(process.env.REACT_APP_GOOGLE_API_KEY)
-  return (
-    <LoadScript
-      googleMapsApiKey={"AIzaSyAPFl51bdExluvRDHFggZ_TTDv9xfUpUwc"}
-    >
-      <GoogleMap
-        mapContainerStyle={containerStyle}
-        center={userCoords}
-        zoom={10}
-      >
+const Map = ({ userCoords, setPlaces }) => {
+    const request = useMemo(() => {
+        return {
+        location: userCoords,
+        radius: '5000',
+        type: ['cafe']
+    }}, [userCoords])
+    // Callback function to be fired after the map has loaded
+    const onMapLoad = (map) => {
         
-        <></>
-      </GoogleMap>
-    </LoadScript>
-  )
+        const service = new window.google.maps.places.PlacesService(map)
+        service.nearbySearch(request, (placesArr) => setPlaces(placesArr))
+    }
+
+    const { isLoaded, loadError } = useLoadScript({
+        googleMapsApiKey: "AIzaSyAPFl51bdExluvRDHFggZ_TTDv9xfUpUwc",
+        libraries
+        })
+
+    return (
+        
+        isLoaded && <GoogleMap 
+            mapContainerStyle={containerStyle}
+            zoom={14}
+            center={userCoords}
+            onLoad={onMapLoad}
+        
+        /> 
+    )
 }
 
 export default Map
