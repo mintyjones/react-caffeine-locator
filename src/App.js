@@ -27,7 +27,10 @@ export default function App() {
   console.log(places)
   return (
     <div className="flex">
-      { userLocated ? <Map userCoords={userCoords} setPlaces={setPlaces}></Map> : null }
+      <div className="w-9/12 h-screen">
+        { userLocated ? <Map userCoords={userCoords} setPlaces={setPlaces}></Map> : null }
+      </div>
+      
       <PlacesPanel places={places}></PlacesPanel>
     </div>
   )

@@ -3,8 +3,8 @@ import { GoogleMap, useLoadScript } from '@react-google-maps/api';
 
 
 const containerStyle = {
-  width: '800px',
-  height: '800px'
+  width: '100%',
+  height: '100%'
 };
 
 const libraries = ['places']
