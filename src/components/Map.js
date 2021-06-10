@@ -50,15 +50,13 @@ const libraries = ['places']
         libraries
         })
 
-        const renderMarkers = () => {
-            return places.map((placeObj, index) => {
+        const renderMarkers = (places) => {
+            console.log("RenderMarkers:", places)
+            return places.map((placeObj) => {
               return <Marker 
-                key={index} 
+                key={placeObj.place_id}
                 position={placeObj.geometry.location} 
-                onClick={() => 
-                handleMarkerClick(placeObj)
-              }
-              
+                onClick={() => handleMarkerClick(placeObj, mapRef)}
                 icon={{
                     url: '/ccup.svg',
                     scaledSize: new window.google.maps.Size(50,50),
@@ -81,7 +79,7 @@ const libraries = ['places']
             onLoad={onMapLoad}
             options={options}
         > 
-        {places ? renderMarkers() : null} 
+        {places ? renderMarkers(places) : null} 
         </GoogleMap>
         </>
     )

@@ -26,7 +26,9 @@ export default function App() {
     dispatch({ type: "setPlaces", data: placesArr})
   }
 
-  function handleMarkerClick(place) {
+  function handleMarkerClick(place, map) {
+    map.current.setZoom(16)
+    map.current.panTo(place.geometry.location)
     if (place) {
       dispatch({
         type: "setMarker",
@@ -43,7 +45,16 @@ export default function App() {
   return (
     <div className="flex">
       <div className="w-9/12 h-screen">
-        { userLocated ? <Map userCoords={userCoords} setPlaces={setPlaces} places={places} handleMarkerClick={handleMarkerClick}></Map> : null }
+        { userLocated ? 
+          <Map 
+            userCoords={userCoords} 
+            setPlaces={setPlaces} 
+            places={places} 
+            handleMarkerClick={handleMarkerClick}>
+          </Map>
+          : 
+          null 
+        }
       </div>
       
       <PlacesPanel places={places}></PlacesPanel>
