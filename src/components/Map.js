@@ -16,7 +16,7 @@ const options = {
 
 const libraries = ['places']
 
-const Map = ({ userCoords, setPlaces, setMap }) => {
+const Map = ({ userCoords, setPlaces, places, handleMarkerClick, setMap }) => {
     const request = useMemo(() => {
         return {
         location: userCoords,
@@ -31,30 +31,13 @@ const Map = ({ userCoords, setPlaces, setMap }) => {
             const service = new window.google.maps.places.PlacesService(mapInstance)
             setMap(mapInstance)
             service.nearbySearch(request, (placesArr) => setPlaces(placesArr))
-        },
-    )
-
-    const Map = ({ userCoords, setPlaces, places, handleMarkerClick }) => {
-        const request = useMemo(() => {
-            return {
-            location: userCoords,
-            radius: '5000',
-            type: ['cafe']
-        }}, [userCoords])
-
-        const mapRef = useRef()
-        const onMapLoad = useCallback(
-            (map) => {
-                mapRef.current = map
-                const service = new window.google.maps.places.PlacesService(map)
-                service.nearbySearch(request, (placesArr) => setPlaces(placesArr))
-            }, [request, setPlaces]
-        )
+        }, [request, setPlaces])
 
         const panTo = useCallback(({lat,lng}) => {
             mapRef.current.panTo({lat,lng})
             mapRef.current.setZoom(14)
         }, [])
+
         const { isLoaded, loadError } = useLoadScript({
         googleMapsApiKey: "AIzaSyAPFl51bdExluvRDHFggZ_TTDv9xfUpUwc",
         libraries
@@ -93,6 +76,6 @@ const Map = ({ userCoords, setPlaces, setMap }) => {
         </GoogleMap>
         </>
     )
-}}
+}
         
 export default memo(Map)
