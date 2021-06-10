@@ -1,5 +1,8 @@
-import React, { useCallback, useMemo } from 'react'
+
+import React, {useRef, useCallback, useMemo} from 'react'
 import { GoogleMap, useLoadScript } from '@react-google-maps/api';
+import Locate from "./Locate"
+
 
 
 const containerStyle = {
@@ -9,21 +12,31 @@ const containerStyle = {
 
 const libraries = ['places']
 
-const Map = ({ userCoords, setPlaces }) => {
-    const request = useMemo(() => {
-        return {
-        location: userCoords,
-        radius: '5000',
-        type: ['cafe']
-    }}, [userCoords])
-    // Callback function to be fired after the map has loaded
-    const onMapLoad = (map) => {
-        
-        const service = new window.google.maps.places.PlacesService(map)
-        service.nearbySearch(request, (placesArr) => setPlaces(placesArr))
-    }
 
-    const { isLoaded, loadError } = useLoadScript({
+    
+
+    const Map = ({ userCoords, setPlaces }) => {
+        const request = useMemo(() => {
+            return {
+            location: userCoords,
+            radius: '5000',
+            type: ['cafe']
+        }}, [userCoords])
+
+        const mapRef = useRef()
+        const onMapLoad = useCallback(
+            (map) => {
+                mapRef.current = map
+                const service = new window.google.maps.places.PlacesService(map)
+                service.nearbySearch(request, (placesArr) => setPlaces(placesArr))
+            },
+        )
+
+        const panTo = useCallback(({lat,lng}) => {
+            mapRef.current.panTo({lat,lng})
+            mapRef.current.setZoom(14)
+        })
+        const { isLoaded, loadError } = useLoadScript({
         googleMapsApiKey: "AIzaSyAPFl51bdExluvRDHFggZ_TTDv9xfUpUwc",
         libraries
         })
@@ -39,5 +52,8 @@ const Map = ({ userCoords, setPlaces }) => {
         /> 
     )
 }
+        
+
+    
 
 export default Map
