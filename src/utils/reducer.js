@@ -3,7 +3,8 @@ const reducer = (state, action) => {
         case("setUserCoords") : 
             return {
                 ...state,
-                userCoords: action.data
+                userCoords: action.data,
+                userLocated: true
             }
         default : return state
     }
