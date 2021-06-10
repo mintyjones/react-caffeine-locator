@@ -1,9 +1,9 @@
 import React from 'react'
 
-const PlaceTile = () => {
+const PlaceTile = ({ placeObj }) => {
     return (
         <div>
-            
+            <h1>{placeObj.name}</h1>
         </div>
     )
 }

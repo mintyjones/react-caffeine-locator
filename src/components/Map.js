@@ -1,7 +1,9 @@
-import React, {useRef, useCallback} from 'react'
-import { GoogleMap, LoadScript } from '@react-google-maps/api';
+
+import React, {useRef, useCallback, useMemo, memo} from 'react'
+import { GoogleMap, useLoadScript } from '@react-google-maps/api';
 import Locate from "./Locate"
 import mapStyles from "../utils/mapStyles"
+
 
 
 const containerStyle = {
@@ -14,35 +16,57 @@ const options = {
     disableDefaultUI: true
   }
 
-const Map = ({ userCoords }) => {
-    console.log(process.env.REACT_APP_GOOGLE_API_KEY)
 
-    const mapRef = useRef()
-    const onMapLoad = useCallback(
-        (map) => {
-            mapRef.current = map
-        },
+
+ 
+const libraries = ['places']
+
+
+    
+
+    const Map = ({ userCoords, setPlaces }) => {
+        const request = useMemo(() => {
+            return {
+            location: userCoords,
+            radius: '5000',
+            type: ['cafe']
+        }}, [userCoords])
+
+        const mapRef = useRef()
+        const onMapLoad = useCallback(
+            (map) => {
+                mapRef.current = map
+                const service = new window.google.maps.places.PlacesService(map)
+                service.nearbySearch(request, (placesArr) => setPlaces(placesArr))
+            }, [request, setPlaces]
+        )
+
+        const panTo = useCallback(({lat,lng}) => {
+            mapRef.current.panTo({lat,lng})
+            mapRef.current.setZoom(14)
+        }, [])
+        const { isLoaded, loadError } = useLoadScript({
+        googleMapsApiKey: "AIzaSyAPFl51bdExluvRDHFggZ_TTDv9xfUpUwc",
+        libraries
+        })
+
+    return (
+        
+        isLoaded && 
+        <>
+        <Locate panTo={panTo}/>
+        <GoogleMap 
+            mapContainerStyle={containerStyle}
+            zoom={14}
+            center={userCoords}
+            onLoad={onMapLoad}
+            options={options}
+        /> 
+        </>
     )
-
-    const panTo = useCallback(({lat,lng}) => {
-        mapRef.current.panTo({lat,lng})
-        mapRef.current.setZoom(14)
-    })
-
-  return (
-    <LoadScript
-      googleMapsApiKey={"AIzaSyAPFl51bdExluvRDHFggZ_TTDv9xfUpUwc"}
-    >
-      <Locate panTo={panTo} />
-      <GoogleMap
-        mapContainerStyle={containerStyle}
-        center={userCoords}
-        zoom={10}
-        options={options}
-      >
-      </GoogleMap>
-    </LoadScript>
-  )
 }
+        
 
-export default Map
+    
+
+export default memo(Map)

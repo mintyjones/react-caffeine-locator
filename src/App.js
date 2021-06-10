@@ -1,14 +1,17 @@
 import React, { useEffect, useReducer } from 'react'
 import reducer from './utils/reducer'
 import Map from './components/Map'
+import PlacesPanel from './components/PlacesPanel'
 
 export default function App() {
   const initialState = {
     userCoords: {},
-    userLocated: false
+    userLocated: false,
+    places: []
   }
+
   const [store, dispatch] = useReducer(reducer, initialState)
-  const { userCoords, userLocated } = store
+  const { userCoords, userLocated, places } = store
 
   useEffect(() => {
     navigator.geolocation.getCurrentPosition((res) => {
@@ -18,11 +21,17 @@ export default function App() {
     })  
   }, [])
   
+  const setPlaces = (placesArr) => {
+    dispatch({ type: "setPlaces", data: placesArr})
+  }
+  console.log(places)
   return (
-    <div className='flex'>
-      <div className='w-9/12 h-screen'>
-      { userLocated ? <Map userCoords={userCoords}></Map> : null }
+    <div className="flex">
+      <div className="w-9/12 h-screen">
+        { userLocated ? <Map userCoords={userCoords} setPlaces={setPlaces}></Map> : null }
       </div>
+      
+      <PlacesPanel places={places}></PlacesPanel>
     </div>
   )
 }
