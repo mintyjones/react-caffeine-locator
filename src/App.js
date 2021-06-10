@@ -16,7 +16,7 @@ export default function App() {
   }
 
   const [store, dispatch] = useReducer(reducer, initialState)
-  const { userCoords, userLocated, places, map, placeDetails, placeSelected } = store
+  const { userCoords, userLocated, places, map, placeDetails, placeSelected, selectedMarker } = store
 
   useEffect(() => {
     navigator.geolocation.getCurrentPosition((res) => {
@@ -30,8 +30,10 @@ export default function App() {
     dispatch({ type: "setPlaces", data: placesArr})
   }
   function handleMarkerClick(place, map) {
-    map.current.setZoom(16)
-    map.current.panTo(place.geometry.location)
+    if (arguments.length === 2) {
+      map.current.setZoom(16)
+      map.current.panTo(place.geometry.location)
+    }
     if (place) {
       dispatch({
         type: "setMarker",
@@ -68,21 +70,15 @@ export default function App() {
           <Map 
             userCoords={userCoords} 
             setPlaces={setPlaces} 
-            places={places}
+            places={places} 
             setMap={setMap} 
             handleMarkerClick={handleMarkerClick}
-          /> 
-          : 
-          null 
-        }
-        { placeSelected ? 
-          <DetailsPanel 
-            placeDetails={placeDetails} 
-            removeSelectedPlace={removeSelectedPlace}
+            selectedMarker={selectedMarker}
           /> 
         : 
           null 
         }
+        { placeSelected ? <DetailsPanel placeDetails={placeDetails}></DetailsPanel> : null }
       </div>
       
       <PlacesPanel places={places} getPlaceDetails={getPlaceDetails}></PlacesPanel>

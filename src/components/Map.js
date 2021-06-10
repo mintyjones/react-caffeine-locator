@@ -1,6 +1,11 @@
 
 import React, {useRef, useCallback, useMemo, memo} from 'react'
-import { GoogleMap, useLoadScript, Marker } from '@react-google-maps/api';
+import { 
+    GoogleMap, 
+    useLoadScript, 
+    Marker, 
+    InfoWindow
+} from '@react-google-maps/api';
 import Locate from "./Locate"
 import mapStyles from "../utils/mapStyles"
 
@@ -16,7 +21,7 @@ const options = {
 
 const libraries = ['places']
 
-const Map = ({ userCoords, setPlaces, places, handleMarkerClick, setMap }) => {
+const Map = ({ userCoords, setPlaces, places, handleMarkerClick, setMap, selectedMarker }) => {
     const request = useMemo(() => {
         return {
         location: userCoords,
@@ -43,7 +48,7 @@ const Map = ({ userCoords, setPlaces, places, handleMarkerClick, setMap }) => {
         libraries
         })
 
-        const renderMarkers = (places) => {
+        const renderMarkers = () => {
             console.log("RenderMarkers:", places)
             return places.map((placeObj) => {
               return <Marker 
@@ -60,6 +65,21 @@ const Map = ({ userCoords, setPlaces, places, handleMarkerClick, setMap }) => {
             })
           }
 
+        const renderInfoWindow = () => {
+            return (
+                <InfoWindow 
+                    position={selectedMarker.geometry.location}
+                    onCloseClick = {() => handleMarkerClick(null)}
+                >
+                    <div>
+                        <h2>GET YER COFFEE HERE!</h2>
+                        <p>{selectedMarker.name}</p>
+                        <p>{selectedMarker.vicinity}</p>
+                    </div>
+                </InfoWindow>
+            )
+        }
+
     return (
         
         isLoaded && 
@@ -72,7 +92,8 @@ const Map = ({ userCoords, setPlaces, places, handleMarkerClick, setMap }) => {
             onLoad={onMapLoad}
             options={options}
         > 
-        {places ? renderMarkers(places) : null} 
+        {places ? renderMarkers() : null} 
+        {selectedMarker ? renderInfoWindow() : null}
         </GoogleMap>
         </>
     )
