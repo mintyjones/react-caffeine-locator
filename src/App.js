@@ -59,11 +59,30 @@ export default function App() {
   const setMap = (mapInstance) => {
     dispatch({ type: "setMap", data: mapInstance})
   }
+  const removeSelectedPlace = () => dispatch({ type: "removeSelectedPlace" })
+
   return (
     <div className="flex">
       <div className="w-9/12 h-screen z-0 relative">
-        { userLocated ? <Map userCoords={userCoords} setPlaces={setPlaces} setMap={setMap} handleMarkerClick={handleMarkerClick}></Map> : null }
-        { placeSelected ? <DetailsPanel placeDetails={placeDetails}></DetailsPanel> : null }
+        { userLocated ? 
+          <Map 
+            userCoords={userCoords} 
+            setPlaces={setPlaces} 
+            places={places}
+            setMap={setMap} 
+            handleMarkerClick={handleMarkerClick}
+          /> 
+          : 
+          null 
+        }
+        { placeSelected ? 
+          <DetailsPanel 
+            placeDetails={placeDetails} 
+            removeSelectedPlace={removeSelectedPlace}
+          /> 
+        : 
+          null 
+        }
       </div>
       
       <PlacesPanel places={places} getPlaceDetails={getPlaceDetails}></PlacesPanel>
