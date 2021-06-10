@@ -11,6 +11,11 @@ const reducer = (state, action) => {
                 ...state,
                 places: action.data
             }
+        case("setMarker") : 
+            return {
+                ...state,
+                places: action.data
+            }
         default : return state
     }
 }

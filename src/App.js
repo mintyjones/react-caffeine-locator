@@ -7,7 +7,8 @@ export default function App() {
   const initialState = {
     userCoords: {},
     userLocated: false,
-    places: []
+    places: [],
+    selectedMarker: null
   }
 
   const [store, dispatch] = useReducer(reducer, initialState)
@@ -24,11 +25,25 @@ export default function App() {
   const setPlaces = (placesArr) => {
     dispatch({ type: "setPlaces", data: placesArr})
   }
+
+  function handleMarkerClick(place) {
+    if (place) {
+      dispatch({
+        type: "setMarker",
+        data: place
+      }) 
+    } else {
+      dispatch({
+        type: "setMarker",
+        data: null
+      }) 
+    }
+  }
   console.log(places)
   return (
     <div className="flex">
       <div className="w-9/12 h-screen">
-        { userLocated ? <Map userCoords={userCoords} setPlaces={setPlaces}></Map> : null }
+        { userLocated ? <Map userCoords={userCoords} setPlaces={setPlaces} places={places} handleMarkerClick={handleMarkerClick}></Map> : null }
       </div>
       
       <PlacesPanel places={places}></PlacesPanel>

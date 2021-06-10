@@ -5,9 +5,10 @@ const Locate = ({panTo}) => {
         <div>
             <button className='locate' onClick={() => {
                 navigator.geolocation.getCurrentPosition((position) => {
+                    console.log(position)
                     panTo({
                         lat: position.coords.latitude,
-                        lng: position.coords.latitude
+                        lng: position.coords.longitude
                     }, () => null, {enableHighAccuracy: true})
                 })
             }}

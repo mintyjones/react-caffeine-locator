@@ -1,6 +1,6 @@
 
 import React, {useRef, useCallback, useMemo, memo} from 'react'
-import { GoogleMap, useLoadScript } from '@react-google-maps/api';
+import { GoogleMap, useLoadScript, Marker } from '@react-google-maps/api';
 import Locate from "./Locate"
 import mapStyles from "../utils/mapStyles"
 
@@ -24,7 +24,7 @@ const libraries = ['places']
 
     
 
-    const Map = ({ userCoords, setPlaces }) => {
+    const Map = ({ userCoords, setPlaces, places, handleMarkerClick }) => {
         const request = useMemo(() => {
             return {
             location: userCoords,
@@ -50,6 +50,25 @@ const libraries = ['places']
         libraries
         })
 
+        const renderMarkers = () => {
+            return places.map((placeObj, index) => {
+              return <Marker 
+                key={index} 
+                position={placeObj.geometry.location} 
+                onClick={() => 
+                handleMarkerClick(placeObj)
+              }
+              
+                icon={{
+                    url: '/ccup.svg',
+                    scaledSize: new window.google.maps.Size(50,50),
+                    origin: new window.google.maps.Point(0,0),
+                    anchor: new window.google.maps.Point(25,25)
+                }}
+              />
+            })
+          }
+
     return (
         
         isLoaded && 
@@ -61,7 +80,9 @@ const libraries = ['places']
             center={userCoords}
             onLoad={onMapLoad}
             options={options}
-        /> 
+        > 
+        {places ? renderMarkers() : null} 
+        </GoogleMap>
         </>
     )
 }
