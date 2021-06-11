@@ -3,6 +3,7 @@ import reducer from './utils/reducer'
 import Map from './components/Map'
 import PlacesPanel from './components/PlacesPanel'
 import DetailsPanel from './components/DetailsPanel'
+import RequestAccess from './components/RequestAccess'
 
 export default function App() {
   const initialState = {
@@ -23,7 +24,7 @@ export default function App() {
       const lat = res.coords.latitude
       const lng = res.coords.longitude
       dispatch({ type: "setUserCoords", data: { lat, lng }})
-    })  
+    }, () => null, {enableHighAccuracy: true})  
   }, [])
   
   const setPlaces = (placesArr) => {
@@ -46,9 +47,11 @@ export default function App() {
       }) 
     }
   }
+
   const setPlaceDetails = (placeDetails) => {
     dispatch({ type: "setPlaceDetails", data: placeDetails })
   }
+
   const getPlaceDetails = (placeId) => {
     const service = new window.google.maps.places.PlacesService(map)
     const request = {
@@ -74,9 +77,10 @@ export default function App() {
             setMap={setMap} 
             handleMarkerClick={handleMarkerClick}
             selectedMarker={selectedMarker}
+            map={map}
           /> 
         : 
-          null 
+          <RequestAccess /> 
         }
         { placeSelected ? 
           <DetailsPanel 
@@ -87,9 +91,11 @@ export default function App() {
           null 
         }
       </div>
-      
-      <PlacesPanel places={places} getPlaceDetails={getPlaceDetails}></PlacesPanel>
-      
+      { userLocated ?
+        <PlacesPanel places={places} getPlaceDetails={getPlaceDetails}></PlacesPanel>
+      :
+        null 
+      }
     </div>
   )
 }
