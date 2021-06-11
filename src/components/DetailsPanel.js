@@ -2,13 +2,21 @@ import React from 'react'
 import { Rating } from '@material-ui/lab';
 import { Paper, Button } from '@material-ui/core'
 import Carousel from 'react-material-ui-carousel'
+import HighlightOffIcon from '@material-ui/icons/HighlightOff';
 
 const DetailsPanel = ({ placeDetails, removeSelectedPlace }) => {
     console.log(placeDetails)
 
     const filterImages = () => {
+
         return placeDetails.photos.filter(photoObj => {
-            return photoObj.height < photoObj.width
+            if(photoObj.height < photoObj.width){
+                // pre-load the images
+                const picture = new Image
+                picture.src = photoObj.getUrl()
+                return true
+            } 
+            return false
         })
     }
     
@@ -16,7 +24,7 @@ const DetailsPanel = ({ placeDetails, removeSelectedPlace }) => {
         <div className="absolute top-1 right-1 z-10 bg-white p-2 w-5/12 max-w-lg rounded-lg">
             <div className="flex justify-between">
                 <h1 className="text-2xl">{placeDetails.name}</h1>
-                <button className="text-2xl px-2 bg-gray-200" onClick={removeSelectedPlace}>X</button>
+                <HighlightOffIcon style={{ fontSize: "40", cursor: "pointer" }}onClick={removeSelectedPlace}></HighlightOffIcon>
             </div>
             <Rating 
                 name="stars"
@@ -34,7 +42,7 @@ const DetailsPanel = ({ placeDetails, removeSelectedPlace }) => {
                 null
 
             }
-            <div className="max-w-full h-90 bg-red-200">
+            <div className="max-w-full">
                 <Carousel>
                     {filterImages().map((photo) => {
                         return <img src={photo.getUrl()}></img>
