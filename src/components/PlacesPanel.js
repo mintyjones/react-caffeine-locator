@@ -4,8 +4,10 @@ import PlaceTile from './PlaceTile'
 const PlacesPanel = ({ places, getPlaceDetails }) => {
 
     const renderPlaces = (places) => {
-        console.log(places)
-        return places.map((placeObj, index) => {
+        const sortedPlaces = places.sort((place1, place2) => {
+             return place1.rating > place2.rating ? -1 : 1
+        })
+        return sortedPlaces.map((placeObj, index) => {
             return <PlaceTile 
                 key={index}
                 placeObj={placeObj}
