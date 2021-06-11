@@ -76,8 +76,8 @@ const Map = ({ map, userCoords, setPlaces, places, handleMarkerClick, setMap, se
                 position={selectedMarker.geometry.location}
                 onCloseClick = {() => handleMarkerClick(null)}
             >
-                <div>
-                    <h2>GET YER COFFEE HERE!</h2>
+                <div className="p-3">
+                    <h1>GET YER COFFEE HERE!</h1>
                     <p>{selectedMarker.name}</p>
                     <p>{selectedMarker.vicinity}</p>
                 </div>
