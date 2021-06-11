@@ -73,7 +73,7 @@ export default function App() {
   const removeSelectedPlace = () => dispatch({ type: "removeSelectedPlace" })
 
   return (
-    <div className="flex">
+    <div className="flex text-textMain">
       <div className="w-9/12 h-screen z-0 relative">
         { userLocated ? 
           <Map 

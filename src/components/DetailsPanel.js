@@ -21,9 +21,9 @@ const DetailsPanel = ({ placeDetails, removeSelectedPlace }) => {
     }
     
     return (
-        <div className="absolute top-1 right-1 z-10 bg-white p-2 w-5/12 max-w-lg rounded-lg">
-            <div className="flex justify-between">
-                <h1 className="text-2xl">{placeDetails.name}</h1>
+        <div className="absolute top-2 right-2 z-10 bg-white p-4 w-4/12 max-w-lg rounded-lg bg-highlightMid">
+            <div className="flex justify-between mb-1">
+                <h1 className="text-3xl">{placeDetails.name}</h1>
                 <HighlightOffIcon style={{ fontSize: "40", cursor: "pointer" }}onClick={removeSelectedPlace}></HighlightOffIcon>
             </div>
             <Rating 
@@ -33,7 +33,7 @@ const DetailsPanel = ({ placeDetails, removeSelectedPlace }) => {
                 precision={0.1}
             />
             { placeDetails.opening_hours ?
-                <ul>
+                <ul className="p-2 bg-highlightHigh rounded-lg mb-4 mt-2">
                     {placeDetails.opening_hours.weekday_text.map((string, index) => {
                         return <li key={index}>{string}</li>
                     })}
@@ -45,7 +45,7 @@ const DetailsPanel = ({ placeDetails, removeSelectedPlace }) => {
             <div className="max-w-full">
                 <Carousel>
                     {filterImages().map((photo) => {
-                        return <img src={photo.getUrl()}></img>
+                        return <img src={photo.getUrl()} ></img>
                     })}
                 </Carousel>  
             </div>
