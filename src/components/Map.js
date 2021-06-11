@@ -35,6 +35,7 @@ const Map = ({ map, userCoords, setPlaces, places, handleMarkerClick, setMap, se
             mapRef.current = mapInstance
             const service = new window.google.maps.places.PlacesService(mapInstance)
             setMap(mapInstance)
+            console.log("running replace")
             const mapCenter = {lat: mapInstance.center.lat(), lng: mapInstance.center.lng()}
             service.nearbySearch({
                 location: mapCenter,
@@ -78,7 +79,7 @@ const Map = ({ map, userCoords, setPlaces, places, handleMarkerClick, setMap, se
                 position={selectedMarker.geometry.location}
                 onCloseClick = {() => handleMarkerClick(null)}
             >
-                <div className="p-3">
+                <div className="p-3 bg-highlightHigh">
                     <p className="text-lg">{selectedMarker.name}</p>
                     <p>{selectedMarker.vicinity}</p>
                     {console.log("place details:", placeRating)}
@@ -97,7 +98,7 @@ const Map = ({ map, userCoords, setPlaces, places, handleMarkerClick, setMap, se
         
         isLoaded && 
         <>
-        <Locate panTo={panTo}/>
+        <Locate panTo={panTo} placeSearchOnCenter={placeSearchOnCenter} map={map} setMap={setMap}/>
         <GoogleMap 
             mapContainerStyle={containerStyle}
             zoom={15.5}

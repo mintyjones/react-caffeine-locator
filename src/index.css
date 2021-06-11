@@ -12,6 +12,10 @@
     cursor:pointer
   }
 
+  /* .gm-style .gm-style-iw-c {
+    background-color: #404040 !important;
+  } */
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
