@@ -33,7 +33,13 @@ export default function App() {
   function handleMarkerClick(place, map) {
     if (arguments.length === 2) {
       map.current.setZoom(16)
-      map.current.panTo(place.geometry.location)
+      const adjustedLng = {
+        lat: place.geometry.location.lat(),
+        lng: place.geometry.location.lng()+0.004
+      }
+      map.current.panTo(adjustedLng)
+      getPlaceDetails(place.place_id)
+      console.log("The place location:", place.geometry.location)
     }
     if (place) {
       dispatch({
@@ -78,6 +84,7 @@ export default function App() {
             handleMarkerClick={handleMarkerClick}
             selectedMarker={selectedMarker}
             map={map}
+            placeDetails={placeDetails}
           /> 
         : 
           <RequestAccess /> 

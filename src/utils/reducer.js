@@ -25,7 +25,8 @@ const reducer = (state, action) => {
         case("removeSelectedPlace") : 
             return {
                 ...state,
-                placeSelected: false
+                placeSelected: false, 
+                selectedMarker: null
             }
         case("setMarker") : 
             return {

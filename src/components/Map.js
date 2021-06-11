@@ -7,6 +7,7 @@ import {
 } from '@react-google-maps/api';
 import Locate from "./Locate"
 import mapStyles from "../utils/mapStyles"
+import { Rating } from '@material-ui/lab'
 
 const containerStyle = {
   width: '100%',
@@ -20,7 +21,7 @@ const options = {
 
 const libraries = ['places']
 
-const Map = ({ map, userCoords, setPlaces, places, handleMarkerClick, setMap, selectedMarker }) => {
+const Map = ({ map, userCoords, setPlaces, places, handleMarkerClick, setMap, selectedMarker, placeDetails }) => {
     // const request = useMemo(() => {
     //     return {
     //     location: userCoords,
@@ -55,7 +56,7 @@ const Map = ({ map, userCoords, setPlaces, places, handleMarkerClick, setMap, se
 
     const renderMarkers = () => {
         return places.map((placeObj) => {
-        console.log("RenderMarkers:", placeObj.geometry.location)
+        // console.log("RenderMarkers:", placeObj.geometry.location)
             return <Marker 
             key={placeObj.place_id}
             position={placeObj.geometry.location} 
@@ -71,15 +72,22 @@ const Map = ({ map, userCoords, setPlaces, places, handleMarkerClick, setMap, se
     }
 
     const renderInfoWindow = () => {
+        const placeRating = placeDetails.rating
         return (
             <InfoWindow 
                 position={selectedMarker.geometry.location}
                 onCloseClick = {() => handleMarkerClick(null)}
             >
                 <div className="p-3">
-                    <h1>GET YER COFFEE HERE!</h1>
-                    <p>{selectedMarker.name}</p>
+                    <p className="text-lg">{selectedMarker.name}</p>
                     <p>{selectedMarker.vicinity}</p>
+                    {console.log("place details:", placeRating)}
+                    {/* <Rating 
+                        name="stars"
+                        value={placeRating}
+                        readOnly
+                        precision={0.1}
+                    /> */}
                 </div>
             </InfoWindow>
         )
@@ -111,7 +119,7 @@ const Map = ({ map, userCoords, setPlaces, places, handleMarkerClick, setMap, se
             }}
         />
         {places ? renderMarkers() : null} 
-        {selectedMarker ? renderInfoWindow() : null}
+        {selectedMarker && placeDetails ? renderInfoWindow() : null}
         </GoogleMap>
         </>
     )
