@@ -20,8 +20,8 @@ const PlacesPanel = ({ places, getPlaceDetails }) => {
     }
 
     return (
-        <div className="w-3/12 h-screen">
-            <div className="overflow-y-auto h-5/6">
+        <div className="w-3/12 h-screen bg-highlightMid">
+            <div className="overflow-y-scroll overflow-x-hidden h-5/6">
                 { places.length > 1 ? renderPlaces(places) 
                 : 
                 <PlacesPanelLoading></PlacesPanelLoading>
