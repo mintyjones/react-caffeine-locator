@@ -74,7 +74,7 @@ const Map = ({ map, userCoords, setPlaces, places, handleMarkerClick, setMap, se
         })
     }
 
-    const infoBoxOptions = { closeBoxURL: '', alignBottom: true, pixelOffset: new window.google.maps.Size(-140, -8)}
+    const infoBoxOptions = { closeBoxURL: '', alignBottom: true, pixelOffset: new window.google.maps.Size(-100, -8)}
 
     const renderInfoWindow = () => {
         const placeRating = placeDetails.rating
