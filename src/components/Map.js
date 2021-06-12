@@ -3,11 +3,13 @@ import {
     GoogleMap, 
     useLoadScript, 
     Marker, 
-    InfoWindow
+    InfoWindow,
+    InfoBox
 } from '@react-google-maps/api';
 import Locate from "./Locate"
 import mapStyles from "../utils/mapStyles"
 import { Rating } from '@material-ui/lab'
+import HighlightOffIcon from '@material-ui/icons/HighlightOff'
 
 const containerStyle = {
   width: '100%',
@@ -72,17 +74,24 @@ const Map = ({ map, userCoords, setPlaces, places, handleMarkerClick, setMap, se
         })
     }
 
+    const infoBoxOptions = { closeBoxURL: '', alignBottom: true, pixelOffset: new window.google.maps.Size(-140, -8)}
+
     const renderInfoWindow = () => {
         const placeRating = placeDetails.rating
         return (
-            <InfoWindow 
+            <InfoBox 
                 position={selectedMarker.geometry.location}
                 onCloseClick = {() => handleMarkerClick(null)}
+                options={infoBoxOptions}
+
             >
-                <div className="p-3 bg-highlightHigh">
+                <div className="infoBox p-3 rounded-lg bg-highlightHigh w-full">
+                  <div className="flex justify-between">
                     <p className="text-lg">{selectedMarker.name}</p>
+                    <HighlightOffIcon style={{ fontSize: "30", cursor: "pointer" }}onClick={()=>handleMarkerClick(null)}></HighlightOffIcon>
+                  </div>
                     <p>{selectedMarker.vicinity}</p>
-                    {console.log("place details:", placeRating)}
+                    {/* {console.log("place details:", placeRating)} */}
                     {/* <Rating 
                         name="stars"
                         value={placeRating}
@@ -90,7 +99,7 @@ const Map = ({ map, userCoords, setPlaces, places, handleMarkerClick, setMap, se
                         precision={0.1}
                     /> */}
                 </div>
-            </InfoWindow>
+            </InfoBox>
         )
     }
 
