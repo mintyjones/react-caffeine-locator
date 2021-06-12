@@ -5,28 +5,12 @@
     background: none;
     border: none;
     z-index: 10
-  }
-  
-  .locate img {
-    width: 30px;
-    cursor:pointer
-  }
+}
 
-  .infoBox:before{
-    content : " ";
-    width: 0;
-    height: 0;
-    border-left: 10px solid transparent;
-    border-right: 10px solid transparent;
-    border-bottom: 10px solid #fff;
-    position:absolute;
-    top:-10px;
-    left:130px;
-  }
-
-  /* .gm-style .gm-style-iw-c {
-    background-color: #404040 !important;
-  } */
+.locate img {
+  width: 30px;
+  cursor:pointer
+}
 
 @tailwind base;
 @tailwind components;

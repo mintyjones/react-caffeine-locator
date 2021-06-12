@@ -10,6 +10,7 @@ import Locate from "./Locate"
 import mapStyles from "../utils/mapStyles"
 import { Rating } from '@material-ui/lab'
 import HighlightOffIcon from '@material-ui/icons/HighlightOff'
+import Heading from './Heading'
 
 const containerStyle = {
   width: '100%',
@@ -74,7 +75,7 @@ const Map = ({ map, userCoords, setPlaces, places, handleMarkerClick, setMap, se
         })
     }
 
-    const infoBoxOptions = { closeBoxURL: '', alignBottom: true, pixelOffset: new window.google.maps.Size(-100, -8)}
+    // const infoBoxOptions = { closeBoxURL: '', alignBottom: true, pixelOffset: new window.google.maps.Size(-100, -8)}
 
     const renderInfoWindow = () => {
         const placeRating = placeDetails.rating
@@ -82,7 +83,12 @@ const Map = ({ map, userCoords, setPlaces, places, handleMarkerClick, setMap, se
             <InfoBox 
                 position={selectedMarker.geometry.location}
                 onCloseClick = {() => handleMarkerClick(null)}
-                options={infoBoxOptions}
+                options={
+                  { 
+                    closeBoxURL: '', 
+                    alignBottom: true, 
+                    pixelOffset: new window.google.maps.Size(-100, -8)}
+                }
 
             >
                 <div className="infoBox p-3 rounded-lg bg-highlightHigh w-full">
@@ -107,6 +113,7 @@ const Map = ({ map, userCoords, setPlaces, places, handleMarkerClick, setMap, se
         
         isLoaded && 
         <>
+        <Heading/>
         <Locate panTo={panTo} placeSearchOnCenter={placeSearchOnCenter} map={map} setMap={setMap}/>
         <GoogleMap 
             mapContainerStyle={containerStyle}
