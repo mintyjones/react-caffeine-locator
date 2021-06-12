@@ -51,7 +51,7 @@ const Map = ({ map, userCoords, setPlaces, places, handleMarkerClick, setMap, se
     }, [])
 
     const { isLoaded, loadError } = useLoadScript({
-    googleMapsApiKey: "AIzaSyAPFl51bdExluvRDHFggZ_TTDv9xfUpUwc",
+    googleMapsApiKey: process.env.REACT_APP_GOOGLE_API_KEY,
     libraries
     })
 
