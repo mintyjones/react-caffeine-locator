@@ -47,7 +47,7 @@ const DetailsPanel = ({ placeDetails, removeSelectedPlace }) => {
             }
             { placeDetails.photos &&
               <div className="max-w-full">
-                  <Carousel>
+                  <Carousel animation={"slide"}>
                       {filterImages().map((photo) => {
                           return <img src={photo.getUrl()} ></img>
                       })}
