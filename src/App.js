@@ -39,7 +39,6 @@ export default function App() {
       }
       map.current.panTo(adjustedLng)
       getPlaceDetails(place.place_id)
-      console.log("The place location:", place.geometry.location)
     }
     if (place) {
       dispatch({

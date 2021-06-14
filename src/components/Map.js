@@ -38,7 +38,6 @@ const Map = ({ map, userCoords, setPlaces, places, handleMarkerClick, setMap, se
             mapRef.current = mapInstance
             const service = new window.google.maps.places.PlacesService(mapInstance)
             setMap(mapInstance)
-            console.log("running replace")
             const mapCenter = {lat: mapInstance.center.lat(), lng: mapInstance.center.lng()}
             service.nearbySearch({
                 location: mapCenter,
@@ -60,7 +59,6 @@ const Map = ({ map, userCoords, setPlaces, places, handleMarkerClick, setMap, se
 
     const renderMarkers = () => {
         return places.map((placeObj) => {
-        // console.log("RenderMarkers:", placeObj.geometry.location)
             return <Marker 
             key={placeObj.place_id}
             position={placeObj.geometry.location} 
@@ -97,13 +95,6 @@ const Map = ({ map, userCoords, setPlaces, places, handleMarkerClick, setMap, se
                     <HighlightOffIcon style={{ fontSize: "30", cursor: "pointer" }}onClick={()=>handleMarkerClick(null)}></HighlightOffIcon>
                   </div>
                     <p>{selectedMarker.vicinity}</p>
-                    {/* {console.log("place details:", placeRating)} */}
-                    {/* <Rating 
-                        name="stars"
-                        value={placeRating}
-                        readOnly
-                        precision={0.1}
-                    /> */}
                 </div>
             </InfoBox>
         )
@@ -124,7 +115,6 @@ const Map = ({ map, userCoords, setPlaces, places, handleMarkerClick, setMap, se
             options={options}
             onClick={(e)=> handleMarkerClick(null)}
             onDragEnd={()=>placeSearchOnCenter(map)}
-            // onDragEnd={()=>console.log(map.center.lat(), map.center.lng())}
         > 
         <Marker
             position={userCoords}

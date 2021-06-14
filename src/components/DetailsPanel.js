@@ -5,7 +5,6 @@ import Carousel from 'react-material-ui-carousel'
 import HighlightOffIcon from '@material-ui/icons/HighlightOff';
 
 const DetailsPanel = ({ placeDetails, removeSelectedPlace }) => {
-    console.log(placeDetails)
 
     const filterImages = () => {
 
