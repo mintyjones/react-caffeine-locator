@@ -1,4 +1,4 @@
-import React, { useRef } from 'react'
+import React from 'react'
 import PlaceTile from './PlaceTile'
 
 import PlacesPanelLoading from './PlacesPanelLoading';

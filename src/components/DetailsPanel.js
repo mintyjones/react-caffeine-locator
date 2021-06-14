@@ -9,7 +9,9 @@ const DetailsPanel = ({ placeDetails, removeSelectedPlace }) => {
 
     const filterImages = () => {
 
-        return placeDetails.photos.filter(photoObj => {
+        return (
+          placeDetails.photos &&
+          placeDetails.photos.filter(photoObj => {
             if(photoObj.height < photoObj.width){
                 // pre-load the images
                 const picture = new Image
@@ -17,7 +19,8 @@ const DetailsPanel = ({ placeDetails, removeSelectedPlace }) => {
                 return true
             } 
             return false
-        })
+          })
+        )
     }
     
     return (
@@ -42,13 +45,15 @@ const DetailsPanel = ({ placeDetails, removeSelectedPlace }) => {
                 null
 
             }
-            <div className="max-w-full">
-                <Carousel>
-                    {filterImages().map((photo) => {
-                        return <img src={photo.getUrl()} ></img>
-                    })}
-                </Carousel>  
-            </div>
+            { placeDetails.photos &&
+              <div className="max-w-full">
+                  <Carousel>
+                      {filterImages().map((photo) => {
+                          return <img src={photo.getUrl()} ></img>
+                      })}
+                  </Carousel>  
+              </div>
+            }
             
            
         </div>

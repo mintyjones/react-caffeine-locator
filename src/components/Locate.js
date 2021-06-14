@@ -3,7 +3,7 @@ import React from 'react'
 const Locate = ({panTo, placeSearchOnCenter, map, setMap}) => {
     return (
         <div>
-            <button className='locate' onClick={() => {
+            <button className='absolute top-3 left-4 z-10' onClick={() => {
                 navigator.geolocation.getCurrentPosition((position) => {
                     console.log(position)
                     panTo({
@@ -14,7 +14,7 @@ const Locate = ({panTo, placeSearchOnCenter, map, setMap}) => {
                 })
             }}
             >
-                <img src="compass.svg" alt="compass" />
+                <img className="w-10" src="compass.svg" alt="compass" />
             </button>
         </div>
     )
