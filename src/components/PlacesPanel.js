@@ -1,10 +1,10 @@
-import React from 'react'
+import React, { useRef } from 'react'
 import PlaceTile from './PlaceTile'
 
 import PlacesPanelLoading from './PlacesPanelLoading';
 import Attributions from './Attributions';
 
-const PlacesPanel = ({ places, getPlaceDetails }) => {
+const PlacesPanel = ({ places, getPlaceDetails, map, handleMarkerClick }) => {
 
     const renderPlaces = (places) => {
         const sortedPlaces = places.sort((place1, place2) => {
@@ -15,6 +15,8 @@ const PlacesPanel = ({ places, getPlaceDetails }) => {
                 key={index}
                 placeObj={placeObj}
                 getPlaceDetails={getPlaceDetails}
+                map={map}
+                handleMarkerClick={handleMarkerClick}
             />
         })
     }

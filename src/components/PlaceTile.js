@@ -1,7 +1,10 @@
-import React from 'react'
+import React, { useRef }  from 'react'
 import { Rating } from '@material-ui/lab';
 
-const PlaceTile = ({ placeObj, getPlaceDetails }) => {
+const PlaceTile = ({ placeObj, getPlaceDetails, map, handleMarkerClick }) => {
+
+  const mapRef = useRef()
+  mapRef.current = map
 
     return (
         <div className="my-4 mx-2 rounded bg-highlightHigh px-2 py-1 shadow">
@@ -17,7 +20,10 @@ const PlaceTile = ({ placeObj, getPlaceDetails }) => {
                     />
                 <button 
                     className=" p-2 border-2 border-black rounded"
-                    onClick={() => getPlaceDetails(placeObj.place_id)}
+                    onClick={() => {
+                      getPlaceDetails(placeObj.place_id)
+                      handleMarkerClick(placeObj, mapRef)
+                    }}
                 > 
                     More Details
                 </button>

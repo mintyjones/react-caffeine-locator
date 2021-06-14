@@ -99,7 +99,7 @@ export default function App() {
         }
       </div>
       { userLocated ?
-        <PlacesPanel places={places} getPlaceDetails={getPlaceDetails}></PlacesPanel>
+        <PlacesPanel places={places} getPlaceDetails={getPlaceDetails} map={map} handleMarkerClick={handleMarkerClick}></PlacesPanel>
       :
         null 
       }
