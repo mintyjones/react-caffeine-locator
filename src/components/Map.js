@@ -1,14 +1,12 @@
-import React, {useRef, useCallback, useMemo, memo} from 'react'
+import React, {useRef, useCallback, memo} from 'react'
 import { 
     GoogleMap, 
     useLoadScript, 
     Marker, 
-    InfoWindow,
     InfoBox
 } from '@react-google-maps/api';
 import Locate from "./Locate"
 import mapStyles from "../utils/mapStyles"
-import { Rating } from '@material-ui/lab'
 import HighlightOffIcon from '@material-ui/icons/HighlightOff'
 import Heading from './Heading'
 
@@ -24,13 +22,7 @@ const options = {
 
 const libraries = ['places']
 
-const Map = ({ map, userCoords, setPlaces, places, handleMarkerClick, setMap, selectedMarker, placeDetails }) => {
-    // const request = useMemo(() => {
-    //     return {
-    //     location: userCoords,
-    //     radius: '5000',
-    //     type: ['cafe']
-    // }}, [userCoords])
+const Map = ({ map, userCoords, setPlaces, places, handleMarkerClick, setMap, selectedMarker, placeDetails, removeSelectedPlace }) => {
 
     const mapRef = useRef()
     const placeSearchOnCenter = useCallback(
@@ -42,8 +34,10 @@ const Map = ({ map, userCoords, setPlaces, places, handleMarkerClick, setMap, se
             service.nearbySearch({
                 location: mapCenter,
                 radius: '5000',
-                type: ['cafe']
+                type: ['cafe'],
+                openNow: true
             }, (placesArr) => setPlaces(placesArr))
+            removeSelectedPlace()
         }, [setPlaces]
     )
 
@@ -73,7 +67,19 @@ const Map = ({ map, userCoords, setPlaces, places, handleMarkerClick, setMap, se
         })
     }
 
-    // const infoBoxOptions = { closeBoxURL: '', alignBottom: true, pixelOffset: new window.google.maps.Size(-100, -8)}
+    // const removedMarkerCheck = () => {
+    //   if (selectedMarker) {
+    //     const result = places.find( ({name}) => name === selectedMarker.name)
+    //     if (result) {
+    //       console.log("Marker still present:", places)
+    //     } else {
+    //       console.log("marker removed")
+    //     }
+    //   } else {
+    //     console.log("No marker selected")
+    //   }
+    // }
+
 
     const renderInfoWindow = () => {
         const placeRating = placeDetails.rating
@@ -114,7 +120,7 @@ const Map = ({ map, userCoords, setPlaces, places, handleMarkerClick, setMap, se
             onLoad={placeSearchOnCenter}
             options={options}
             onClick={(e)=> handleMarkerClick(null)}
-            onDragEnd={()=>placeSearchOnCenter(map)}
+            onDragEnd={()=> placeSearchOnCenter(map)}
         > 
         <Marker
             position={userCoords}
