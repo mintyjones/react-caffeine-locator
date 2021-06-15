@@ -29,8 +29,11 @@ export default function App() {
   
   const setPlaces = (placesArr) => {
     dispatch({ type: "setPlaces", data: placesArr})
+    console.log("after the removedMarkerCheck:", places)
   }
+
   function handleMarkerClick(place, map) {
+    console.log("on Map Click:", places)
     if (arguments.length === 2) {
       map.current.setZoom(16)
       const adjustedLng = {
@@ -84,6 +87,7 @@ export default function App() {
             selectedMarker={selectedMarker}
             map={map}
             placeDetails={placeDetails}
+            removeSelectedPlace={removeSelectedPlace}
           /> 
         : 
           <RequestAccess /> 
