@@ -34,7 +34,8 @@ const Map = ({ map, userCoords, setPlaces, places, handleMarkerClick, setMap, se
             service.nearbySearch({
                 location: mapCenter,
                 radius: '5000',
-                type: ['cafe']
+                type: ['cafe'],
+                openNow: true
             }, (placesArr) => setPlaces(placesArr))
             removeSelectedPlace()
         }, [setPlaces]
